@@ -1,0 +1,27 @@
+server:
+  port: 8761
+
+app:
+  config:
+    host: ${env.CONFIG_SERVICE_HOST}
+    port: ${env.CONFIG_SERVICE_PORT}
+    user: ${env.CONFIG_SERVICE_USER}
+    password: ${env.CONFIG_SERVICE_PASSWORD}
+
+spring:
+  application:
+    name: discovery
+  cloud:
+    config:
+      uri: http://${app.config.host}:${app.config.port}
+      fail-fast: true
+      username: ${app.config.user}
+      password: ${app.config.password}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server.port: 8761
